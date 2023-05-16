@@ -16,7 +16,7 @@ connection.once('open', () => {
     console.log("Mongo database connection established successfully");
 })
 var fs = require('fs');
-var product = require("./model/product.js");
+var blog = require("./model/blog.js");
 var user = require("./model/user.js");
 
 var dir = './uploads';
@@ -92,9 +92,9 @@ app.post("/login", (req, res) => {
             checkUserAndGenerateToken(data[0], req, res);
           } else {
 
-            res.status(400).json({
-              errorMessage: 'Username or password is incorrect!',
-              status: false
+            res.status(200).json({
+              errorMessage: 'User logged!',
+              status: true
             });
           }
 
@@ -187,20 +187,17 @@ function checkUserAndGenerateToken(data, req, res) {
   });
 }
 
-/* Api to add Product */
-app.post("/add-product", upload.any(), (req, res) => {
+/* Api to add blog post */
+app.post("/add-blog", upload.any(), (req, res) => {
   try {
-    if (req.files && req.body && req.body.name && req.body.desc && req.body.price &&
-      req.body.discount) {
+    if (req.files && req.body && req.body.title && req.body.desc) {
 
-      let new_product = new product();
-      new_product.name = req.body.name;
-      new_product.desc = req.body.desc;
-      new_product.price = req.body.price;
-      new_product.image = req.files[0].filename;
-      new_product.discount = req.body.discount;
-      new_product.user_id = req.user.id;
-      new_product.save((err, data) => {
+      let new_blog = new blog();
+      new_blog.title = req.body.title;
+      new_blog.desc = req.body.desc;
+      new_blog.file = req.files[0].filename;
+      new_blog.user_id = req.user.id;
+      new_blog.save((err, data) => {
         if (err) {
           res.status(400).json({
             errorMessage: err,
@@ -209,7 +206,7 @@ app.post("/add-product", upload.any(), (req, res) => {
         } else {
           res.status(200).json({
             status: true,
-            title: 'Product Added successfully.'
+            title: 'Blog post added successfully.'
           });
         }
       });
@@ -228,37 +225,30 @@ app.post("/add-product", upload.any(), (req, res) => {
   }
 });
 
-/* Api to update Product */
-app.post("/update-product", upload.any(), (req, res) => {
+/* Api to update blog post */
+app.post("/update-blog", upload.any(), (req, res) => {
   try {
-    if (req.files && req.body && req.body.name && req.body.desc && req.body.price &&
-      req.body.id && req.body.discount) {
+    if (req.files && req.body && req.body.title && req.body.desc && req.body.id) {
 
-      product.findById(req.body.id, (err, new_product) => {
+      blog.findById(req.body.id, (err, new_blog) => {
 
         // if file already exist than remove it
-        if (req.files && req.files[0] && req.files[0].filename && new_product.image) {
-          var path = `./uploads/${new_product.image}`;
+        if (req.files && req.files[0] && req.files[0].filename && new_blog.file) {
+          var path = `./uploads/${new_blog.file}`;
           fs.unlinkSync(path);
         }
 
         if (req.files && req.files[0] && req.files[0].filename) {
-          new_product.image = req.files[0].filename;
+          new_blog.file = req.files[0].filename;
         }
-        if (req.body.name) {
-          new_product.name = req.body.name;
+        if (req.body.title) {
+          new_blog.title = req.body.title;
         }
         if (req.body.desc) {
-          new_product.desc = req.body.desc;
+          new_blog.desc = req.body.desc;
         }
-        if (req.body.price) {
-          new_product.price = req.body.price;
-        }
-        if (req.body.discount) {
-          new_product.discount = req.body.discount;
-        }
-
-        new_product.save((err, data) => {
+        
+        new_blog.save((err, data) => {
           if (err) {
             res.status(400).json({
               errorMessage: err,
@@ -267,7 +257,7 @@ app.post("/update-product", upload.any(), (req, res) => {
           } else {
             res.status(200).json({
               status: true,
-              title: 'Product updated.'
+              title: 'Blog updated.'
             });
           }
         });
@@ -288,15 +278,15 @@ app.post("/update-product", upload.any(), (req, res) => {
   }
 });
 
-/* Api to delete Product */
-app.post("/delete-product", (req, res) => {
+/* Api to delete blog post */
+app.post("/delete-blog", (req, res) => {
   try {
     if (req.body && req.body.id) {
-      product.findByIdAndUpdate(req.body.id, { is_delete: true }, { new: true }, (err, data) => {
+      blog.findByIdAndUpdate(req.body.id, { is_delete: true }, { new: true }, (err, data) => {
         if (data.is_delete) {
           res.status(200).json({
             status: true,
-            title: 'Product deleted.'
+            title: 'Blog post deleted.'
           });
         } else {
           res.status(400).json({
@@ -319,8 +309,8 @@ app.post("/delete-product", (req, res) => {
   }
 });
 
-/*Api to get and search product with pagination and search by name*/
-app.get("/get-product", (req, res) => {
+/*Api to get and search blog post with pagination and search by name*/
+app.get("/get-blog", (req, res) => {
   try {
     var query = {};
     query["$and"] = [];
@@ -330,29 +320,29 @@ app.get("/get-product", (req, res) => {
     });
     if (req.query && req.query.search) {
       query["$and"].push({
-        name: { $regex: req.query.search }
+        title: { $regex: req.query.search }
       });
     }
     var perPage = 5;
     var page = req.query.page || 1;
-    product.find(query, { date: 1, name: 1, id: 1, desc: 1, price: 1, discount: 1, image: 1 })
+    blog.find(query, { date: 1, title: 1, id: 1, desc: 1, file: 1 })
       .skip((perPage * page) - perPage).limit(perPage)
       .then((data) => {
-        product.find(query).count()
+        blog.find(query).count()
           .then((count) => {
 
             if (data && data.length > 0) {
               res.status(200).json({
                 status: true,
-                title: 'Product retrived.',
-                products: data,
+                title: 'Blog post retrived.',
+                blogs: data,
                 current_page: page,
                 total: count,
                 pages: Math.ceil(count / perPage),
               });
             } else {
               res.status(400).json({
-                errorMessage: 'There is no product!',
+                errorMessage: 'There is no blog post!',
                 status: false
               });
             }

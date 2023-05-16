@@ -1,16 +1,14 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-productSchema = new Schema( {
-	name: String,
+blogSchema = new Schema( {
+	title: String,
 	desc: String,
-	price: Number,
-	image: String,
-	discount: Number,
+	file: String,
 	user_id: Schema.ObjectId,
 	is_delete: { type: Boolean, default: false },
 	date : { type : Date, default: Date.now }
 }),
-product = mongoose.model('product', productSchema);
+blog = mongoose.model('blog', blogSchema);
 
-module.exports = product;
+module.exports = blog;
