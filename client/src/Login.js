@@ -40,14 +40,17 @@ export default class Login extends React.Component {
 
   render() {
     return (
-      <div style={{ marginTop: '200px' }}>
+      
+      <div style={{ marginTop: '150px' }}>
         <div>
-          <h2>Login</h2>
+          <h1>Hello Again</h1>
+          <h3>Welcome Back, You've been missed!</h3>
         </div>
-
+        <br/>
         <div>
           <TextField
-            id="standard-basic"
+            id="outlined-basic"
+            variant="outlined" 
             type="text"
             autoComplete="off"
             name="username"
@@ -58,7 +61,8 @@ export default class Login extends React.Component {
           />
           <br /><br />
           <TextField
-            id="standard-basic"
+            id="outlined-basic"
+            variant="outlined" 
             type="password"
             autoComplete="off"
             name="password"
@@ -67,19 +71,19 @@ export default class Login extends React.Component {
             placeholder="Password"
             required
           />
-          <br /><br />
+          <br /><br /><br /><br />
           <Button
             className="button_style"
             variant="contained"
             color="primary"
-            size="small"
+            size="large"
             disabled={this.state.username == '' && this.state.password == ''}
             onClick={this.login}
           >
             Login
           </Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <Link href="/register">
-            Register
+            REGISTER
           </Link>
         </div>
       </div>

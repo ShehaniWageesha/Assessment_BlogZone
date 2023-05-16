@@ -243,7 +243,7 @@ export default class Dashboard extends Component {
       <div>
         {this.state.loading && <LinearProgress size={40} />}
         <div>
-          <h2>Dashboard</h2>
+          <h1>Dashboard</h1>
           <Button
             className="button_style"
             variant="contained"
@@ -273,7 +273,7 @@ export default class Dashboard extends Component {
           <DialogTitle id="alert-dialog-title">Edit Blog</DialogTitle>
           <DialogContent>
             <TextField
-              id="standard-basic"
+              id="outlined-basic"
               type="text"
               autoComplete="off"
               name="title"
@@ -284,7 +284,7 @@ export default class Dashboard extends Component {
             />
             <br />
             <TextField
-              id="standard-basic"
+              id="outlined-basic"
               type="text"
               autoComplete="off"
               name="desc"
@@ -300,7 +300,7 @@ export default class Dashboard extends Component {
               {" "}
               Upload
               <input
-                // id="standard-basic"
+                // id="outlined-basic"
                 type="file"
                 accept="image/*"
                 name="file"
@@ -340,7 +340,7 @@ export default class Dashboard extends Component {
           <DialogTitle id="alert-dialog-title">Add Blog</DialogTitle>
           <DialogContent>
             <TextField
-              id="standard-basic"
+              id="outlined-basic"
               type="text"
               autoComplete="off"
               name="title"
@@ -351,7 +351,7 @@ export default class Dashboard extends Component {
             />
             <br />
             <TextField
-              id="standard-basic"
+              id="outlined-basic"
               type="text"
               autoComplete="off"
               name="desc"
@@ -367,7 +367,7 @@ export default class Dashboard extends Component {
               {" "}
               Upload
               <input
-                // id="standard-basic"
+                // id="outlined-basic"
                 type="file"
                 accept="image/*"
                 // inputProps={{
@@ -408,13 +408,13 @@ export default class Dashboard extends Component {
 
         <TableContainer>
           <TextField
-            id="standard-basic"
+            id="outlined-basic"
             type="search"
             autoComplete="off"
             name="search"
             value={this.state.search}
             onChange={this.onChange}
-            placeholder="Search by blog name"
+            placeholder="Search Here..."
             required
           />
           <Table aria-label="simple table">

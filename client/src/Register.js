@@ -38,14 +38,16 @@ export default class Register extends React.Component {
 
   render() {
     return (
-      <div style={{ marginTop: '200px' }}>
+      <div style={{ marginTop: '100px' }}>
         <div>
-          <h2>Register</h2>
+          <h1>Get Started</h1>
+          <h3>Create Your Account</h3>
         </div>
-
+        <br/>
         <div>
           <TextField
-            id="standard-basic"
+            id="outlined-basic"
+            variant="outlined" 
             type="text"
             autoComplete="off"
             name="username"
@@ -56,7 +58,8 @@ export default class Register extends React.Component {
           />
           <br /><br />
           <TextField
-            id="standard-basic"
+            id="outlined-basic"
+            variant="outlined" 
             type="password"
             autoComplete="off"
             name="password"
@@ -67,7 +70,8 @@ export default class Register extends React.Component {
           />
           <br /><br />
           <TextField
-            id="standard-basic"
+            id="outlined-basic"
+            variant="outlined" 
             type="password"
             autoComplete="off"
             name="confirm_password"
@@ -76,19 +80,19 @@ export default class Register extends React.Component {
             placeholder="Confirm Password"
             required
           />
-          <br /><br />
+          <br /><br /><br /><br />
           <Button
             className="button_style"
             variant="contained"
             color="primary"
-            size="small"
+            size="large"
             disabled={this.state.username == '' && this.state.password == ''}
             onClick={this.register}
           >
             Register
           </Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <Link href="/">
-            Login
+            LOGIN
           </Link>
         </div>
       </div>
