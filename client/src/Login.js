@@ -53,7 +53,7 @@ export default class Login extends React.Component {
             name="username"
             value={this.state.username}
             onChange={this.onChange}
-            placeholder="User Name"
+            placeholder="Username"
             required
           />
           <br /><br />
