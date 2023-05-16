@@ -16,6 +16,7 @@ import {
 } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
 import swal from "sweetalert";
+import { blue, blueGrey } from "@material-ui/core/colors";
 const axios = require("axios");
 
 export default class Dashboard extends Component {
@@ -238,17 +239,18 @@ export default class Dashboard extends Component {
     this.setState({ openBlogEditModal: false });
   };
 
-  render() {
+    render() {
     return (
       <div>
         {this.state.loading && <LinearProgress size={40} />}
         <div>
           <h1>Dashboard</h1>
+        </div>
+        <div>
           <Button
             className="button_style"
             variant="contained"
-            color="primary"
-            size="small"
+            size="medium"
             onClick={this.handleBlogOpen}
           >
             Add Blog
@@ -256,12 +258,14 @@ export default class Dashboard extends Component {
           <Button
             className="button_style"
             variant="contained"
-            size="small"
+            size="medium"
             onClick={this.logOut}
           >
             Log Out
           </Button>
         </div>
+
+        <br/><br/>
 
         {/* Edit Blog  */}
         <Dialog
@@ -404,11 +408,11 @@ export default class Dashboard extends Component {
           </DialogActions>
         </Dialog>
 
-        <br />
-
         <TableContainer>
           <TextField
             id="outlined-basic"
+            variant="outlined"
+            size="small"
             type="search"
             autoComplete="off"
             name="search"
@@ -417,22 +421,25 @@ export default class Dashboard extends Component {
             placeholder="Search Here..."
             required
           />
-          <Table aria-label="simple table">
-            <TableHead>
+
+          <br/><br/><br/>
+          
+          <Table aria-label="simple table" style={{ marginLeft: '200px', height: 50, width: '80%' }}>
+            <TableHead style={{ color: blue}}>
               <TableRow>
-                <TableCell align="center">Title</TableCell>
-                <TableCell align="center">Image</TableCell>
-                <TableCell align="center">Body</TableCell>
-                <TableCell align="center">Action</TableCell>
+                <TableCell align="center" style={{ fontWeight: "bolder", color: "#a3d3e1" }}>TITLE</TableCell>
+                <TableCell align="center" style={{ fontWeight: "bolder", color: "#a3d3e1" }}>IMAGE</TableCell>
+                <TableCell align="center" style={{ fontWeight: "bolder", color: "#a3d3e1" }}>BODY</TableCell>
+                <TableCell align="center" style={{ fontWeight: "bolder", color: "#a3d3e1" }}>ACTIONS</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {this.state.blogs.map((row) => (
                 <TableRow key={row.title}>
-                  <TableCell align="center" component="th" scope="row">
+                  <TableCell align="center" component="th" scope="columns" style={{ fontWeight: "bolder", color: "darkslategray"}}>
                     {row.title}
                   </TableCell>
-                  <TableCell align="center">
+                  <TableCell align="center" >
                     <img
                       src={`http://localhost:2000/${row.image}`}
                       width="70"
@@ -448,7 +455,7 @@ export default class Dashboard extends Component {
                       size="small"
                       onClick={(e) => this.handleBlogEditOpen(row)}
                     >
-                      Edit
+                      Update Info
                     </Button>
                     <Button
                       className="button_style"
@@ -469,7 +476,7 @@ export default class Dashboard extends Component {
             count={this.state.pages}
             page={this.state.page}
             onChange={this.pageChange}
-            color="primary"
+            color="info"
           />
         </TableContainer>
       </div>

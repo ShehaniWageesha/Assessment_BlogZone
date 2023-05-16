@@ -9,10 +9,6 @@ body {
   margin-right: 10px;
 }
 
-.centerTable {
-  margin: 50px;
-}
-
 h3 {
     color:cornflowerblue; 
     font-family: 'Courier New', Courier, monospace;
@@ -25,6 +21,7 @@ h1 {
   font-weight: bolder; 
   font-size: 350%;
 }
+
 
 
 
