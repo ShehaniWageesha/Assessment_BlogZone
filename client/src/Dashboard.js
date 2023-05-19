@@ -239,45 +239,66 @@ export default class Dashboard extends Component {
     this.setState({ openBlogEditModal: false });
   };
 
-    render() {
+  render() {
     return (
       <div>
         {this.state.loading && <LinearProgress size={40} />}
-        <div>
+        <Button
+          className="button_style"
+          variant="contained"
+          size="medium"
+          onClick={this.logOut}
+          style={{ float: "right", marginRight: "100px", marginTop: '50px' }}
+        >
+          Log Out
+        </Button>
+        <div style={{ marginLeft: "100px", float: 'left' }}>
           <h1>Dashboard</h1>
         </div>
-        <div>
-          <Button
-            className="button_style"
-            variant="contained"
-            size="medium"
-            onClick={this.handleBlogOpen}
-          >
-            Add Blog
-          </Button>
-          <Button
-            className="button_style"
-            variant="contained"
-            size="medium"
-            onClick={this.logOut}
-          >
-            Log Out
-          </Button>
-        </div>
-
-        <br/><br/>
-
         {/* Edit Blog  */}
         <Dialog
           open={this.state.openBlogEditModal}
           onClose={this.handleBlogClose}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
+          PaperProps={{
+            style: {
+              width: "800px",
+              height: "500px",
+              backgroundColor: "#fff6ed",
+            },
+          }}
         >
-          <DialogTitle id="alert-dialog-title">Edit Blog</DialogTitle>
+          <DialogTitle id="alert-dialog-title">
+            <h3>Edit Blog</h3>
+          </DialogTitle>
           <DialogContent>
             <TextField
-              id="outlined-basic"
+              id="outlined-multiline-static"
+              label="Title"
+              color="#a3d3e1"
+              name="title"
+              value={this.state.title}
+              onChange={this.onChange}
+              multiline
+              fullWidth
+            />
+            <br />
+            <br />
+            <TextField
+              id="outlined-multiline-flexible"
+              label="Body"
+              color="#a3d3e1"
+              type="textarea"
+              name="desc"
+              value={this.state.desc}
+              onChange={this.onChange}
+              multiline
+              fullWidth
+              rows={5}
+            />
+            {/* <br />
+            <TextField
               type="text"
               autoComplete="off"
               name="title"
@@ -285,18 +306,19 @@ export default class Dashboard extends Component {
               onChange={this.onChange}
               placeholder="Title"
               required
-            />
-            <br />
+            /> */}
+            {/* <br />
             <TextField
               id="outlined-basic"
-              type="text"
+              type="textarea"
               autoComplete="off"
               name="desc"
               value={this.state.desc}
               onChange={this.onChange}
               placeholder="Body"
               required
-            />
+            /> */}
+            <br />
             <br />
             <br />
             <br />
@@ -340,10 +362,49 @@ export default class Dashboard extends Component {
           onClose={this.handleBlogClose}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
+          PaperProps={{
+            style: {
+              width: "800px",
+              height: "500px",
+              backgroundColor: "#fff6ed",
+            },
+          }}
         >
-          <DialogTitle id="alert-dialog-title">Add Blog</DialogTitle>
+          <DialogTitle id="alert-dialog-title">
+            <h3>Add Blog</h3>
+          </DialogTitle>
           <DialogContent>
             <TextField
+              id="outlined-multiline-static"
+              label="Title"
+              color="#a3d3e1"
+              name="title"
+              value={this.state.title}
+              onChange={this.onChange}
+              multiline
+              fullWidth
+              required
+            />
+            <br />
+            <br />
+            <TextField
+              id="outlined-multiline-flexible"
+              label="Body"
+              color="#a3d3e1"
+              type="textarea"
+              name="desc"
+              value={this.state.desc}
+              onChange={this.onChange}
+              multiline
+              fullWidth
+              rows={5}
+              required
+            />
+            <br />
+            <br />
+            <br />
+            <br />
+            {/* <TextField
               id="outlined-basic"
               type="text"
               autoComplete="off"
@@ -363,10 +424,7 @@ export default class Dashboard extends Component {
               onChange={this.onChange}
               placeholder="Body"
               required
-            />
-            <br />
-            <br />
-            <br />
+            /> */}
             <Button variant="contained" component="label">
               {" "}
               Upload
@@ -407,39 +465,86 @@ export default class Dashboard extends Component {
             </Button>
           </DialogActions>
         </Dialog>
+        <div>
+          <div>
+            <TextField
+              type="search"
+              name="search"
+              value={this.state.search}
+              onChange={this.onChange}
+              placeholder="Search by blog title..."
+              style={{
+                width: "300px",
+                fontStyle: "italic",
+                float: "right",
+                marginRight: "-100px",
+                marginTop: '125px'
+              }}
+            />
+          </div>
+          <div style={{
+                marginLeft: '-310px', float: "left", marginTop: '120px'
+              }}>
+            <Button
+              className="button_style"
+              variant="contained"
+              size="medium"
+              onClick={this.handleBlogOpen}
+              >
+              Add Blog
+            </Button>
+        </div>
+        </div>
 
         <TableContainer>
-          <TextField
-            id="outlined-basic"
-            variant="outlined"
-            size="small"
-            type="search"
-            autoComplete="off"
-            name="search"
-            value={this.state.search}
-            onChange={this.onChange}
-            placeholder="Search Here..."
-            required
-          />
+          <br />
+          <br />
+          <br />
 
-          <br/><br/><br/>
-          
-          <Table aria-label="simple table" style={{ marginLeft: '200px', height: 50, width: '80%' }}>
-            <TableHead style={{ color: blue}}>
+          <Table
+            aria-label="simple table"
+            style={{ marginLeft: "100px", width: "85%" }}
+          >
+            <TableHead style={{ color: blue }}>
               <TableRow>
-                <TableCell align="center" style={{ fontWeight: "bolder", color: "#a3d3e1" }}>TITLE</TableCell>
-                <TableCell align="center" style={{ fontWeight: "bolder", color: "#a3d3e1" }}>IMAGE</TableCell>
-                <TableCell align="center" style={{ fontWeight: "bolder", color: "#a3d3e1" }}>BODY</TableCell>
-                <TableCell align="center" style={{ fontWeight: "bolder", color: "#a3d3e1" }}>ACTIONS</TableCell>
+                <TableCell
+                  align="center"
+                  style={{ fontWeight: "bolder", color: "#2596be" }}
+                >
+                  TITLE
+                </TableCell>
+                <TableCell
+                  align="center"
+                  style={{ fontWeight: "bolder", color: "#2596be" }}
+                >
+                  IMAGE
+                </TableCell>
+                <TableCell
+                  align="center"
+                  style={{ fontWeight: "bolder", color: "#2596be" }}
+                >
+                  BODY
+                </TableCell>
+                <TableCell
+                  align="center"
+                  style={{ fontWeight: "bolder", color: "#2596be" }}
+                >
+                  ACTIONS
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {this.state.blogs.map((row) => (
                 <TableRow key={row.title}>
-                  <TableCell align="center" component="th" scope="columns" style={{ fontWeight: "bolder", color: "darkslategray"}}>
+                  <TableCell
+                    align="center"
+                    component="th"
+                    scope="columns"
+                    style={{ fontWeight: "bolder", color: "darkslategray" }}
+                  >
                     {row.title}
                   </TableCell>
-                  <TableCell align="center" >
+                  <TableCell align="center">
                     <img
                       src={`http://localhost:2000/${row.image}`}
                       width="70"
@@ -455,7 +560,7 @@ export default class Dashboard extends Component {
                       size="small"
                       onClick={(e) => this.handleBlogEditOpen(row)}
                     >
-                      Update Info
+                      Edit
                     </Button>
                     <Button
                       className="button_style"
@@ -477,6 +582,7 @@ export default class Dashboard extends Component {
             page={this.state.page}
             onChange={this.pageChange}
             color="info"
+            style={{ marginLeft: '100px' }}
           />
         </TableContainer>
       </div>
